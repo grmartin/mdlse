@@ -8,18 +8,6 @@
 
 import Foundation
 
-var format: OutputFormat = .DEFAULT
-var dataFmt: DataFormat = .DEFAULT
-var dateFmt: DateFormat = .DEFAULT
-var agnosticFlag: Bool = false
-var file: String? = nil
-var stdOut: Bool = false
-var outputFile: String? = nil
-
-func println(_ line: Any) {
-    print(line, terminator: "\n")
-}
-
 func help() {
     println("mdlse - The Spotlight Metadata Extraction utility.")
     println("")
@@ -43,11 +31,11 @@ func help() {
     println("")
     println("")
 
-    exit(1);
+    exit(1)
 }
 
 if (CommandLine.argc < 1) {
-    help();
+    help()
 }
 
 while case let option = getopt(CommandLine.argc, CommandLine.unsafeArgv, "i:f:bo:aj:"), option != -1 {
@@ -55,7 +43,7 @@ while case let option = getopt(CommandLine.argc, CommandLine.unsafeArgv, "i:f:bo
     case "i":
         file = String(cString: optarg)
     case "f":
-        format = OutputFormat.parse(String(cString: optarg));
+        format = OutputFormat.parse(String(cString: optarg))
     case "b":
         stdOut = true
     case "o":
@@ -80,11 +68,11 @@ while case let option = getopt(CommandLine.argc, CommandLine.unsafeArgv, "i:f:bo
 }
 
 if file.isNullOrEmpty() {
-    help();
+    help()
 }
 
 if outputFile.isNullOrEmpty() {
-    stdOut = true;
+    stdOut = true
 }
 
 exit(process(file: file, outputFormat: format, dateFormat: dateFmt, dataFormat: dataFmt, outFile: outputFile, stdOut: stdOut, agnostic: agnosticFlag))

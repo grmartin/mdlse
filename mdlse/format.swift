@@ -15,13 +15,13 @@ enum OutputFormat: Int {
     }
 
     static func parse(_ val: String?) -> OutputFormat {
-        let value : String! = val.toConstantComparison();
+        let value : String! = val.toConstantComparison()
 
-        var out : OutputFormat = .DEFAULT;
+        var out : OutputFormat = .DEFAULT
 
-        if (value.isNullOrEmpty()) { return out };
+        if (value.isNullOrEmpty()) { return out }
 
-        let char : Character = value[0];
+        let char : Character = value[0]
 
         switch char {
             case "p": out = .PLIST
@@ -29,10 +29,9 @@ enum OutputFormat: Int {
             default: break
         }
 
-        return out;
+        return out
     }
 }
-
 
 struct DateFormat : OptionSet {
     let rawValue: Int
@@ -40,21 +39,21 @@ struct DateFormat : OptionSet {
     fileprivate static let FLAG_ISOFMT  = DateFormat(rawValue: 1 << 0)
     fileprivate static let FLAG_LOCALTZ = DateFormat(rawValue: 1 << 1)
 
-    static let ISO8601C_LOCAL:DateFormat = [.FLAG_ISOFMT, .FLAG_LOCALTZ]
-    static let ISO8601C_ZULU:DateFormat = [.FLAG_ISOFMT]
-    static let EPOCH_LOCAL:DateFormat = [.FLAG_LOCALTZ]
-    static let EPOCH_ZULU:DateFormat = []
+    static let ISO8601C_LOCAL: DateFormat = [.FLAG_ISOFMT, .FLAG_LOCALTZ]
+    static let ISO8601C_ZULU: DateFormat = [.FLAG_ISOFMT]
+    static let EPOCH_LOCAL: DateFormat = [.FLAG_LOCALTZ]
+    static let EPOCH_ZULU: DateFormat = []
 
     public static var DEFAULT: DateFormat {
         return .EPOCH_ZULU
     }
 
     fileprivate static func parseNillable(_ val: String?) -> DateFormat? {
-        let value : String! = val.toConstantComparison();
+        let value: String! = val.toConstantComparison()
 
-        var out : DateFormat? = nil;
+        var out: DateFormat? = nil
 
-        if (value.isNullOrEmpty()) { return out };
+        if (value.isNullOrEmpty()) { return out }
 
         switch value {
             case "epoch": out = .EPOCH_LOCAL
@@ -64,17 +63,17 @@ struct DateFormat : OptionSet {
             default: break
         }
 
-        return out;
+        return out
     }
 
     static func isValidValue(_ val: String?) -> Bool {
-        return parseNillable(val) != nil;
+        return parseNillable(val) != nil
     }
 
     static func parse(_ val: String?) -> DateFormat {
-        let out: DateFormat? = parseNillable(val);
+        let out: DateFormat? = parseNillable(val)
 
-        return out != nil ? out! : .DEFAULT;
+        return out != nil ? out! : .DEFAULT
     }
 
     public func converter() -> ((_ x: Date?) -> String?) {
@@ -119,11 +118,11 @@ enum DataFormat: Int {
     }
 
     fileprivate static func parseNillable(_ val: String?) -> DataFormat? {
-        let value : String! = val.toConstantComparison();
+        let value: String! = val.toConstantComparison()
 
-        var out : DataFormat? = nil;
+        var out: DataFormat? = nil
 
-        if (value.isNullOrEmpty()) { return out };
+        if (value.isNullOrEmpty()) { return out }
 
         switch value {
             case "hex": out = .HEX
@@ -131,17 +130,17 @@ enum DataFormat: Int {
             case "b64": out = .BASE64
             default: break
         }
-        return out;
+        return out
     }
 
     static func isValidValue(_ val: String?) -> Bool {
-        return parseNillable(val) != nil;
+        return parseNillable(val) != nil
     }
 
     static func parse(_ val: String?) -> DataFormat {
-        let out: DataFormat? = parseNillable(val);
+        let out: DataFormat? = parseNillable(val)
 
-        return out != nil ? out! : .DEFAULT;
+        return out != nil ? out! : .DEFAULT
     }
     public func converter() -> ((_ x: Data?) -> String?) {
         switch self {
